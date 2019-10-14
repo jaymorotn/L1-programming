@@ -1,35 +1,129 @@
 <!doctype html>
 
 <head>
-
- <title>Crossy Road</title>
+    <title>Canvas</title>
 </head>
 
 <body>
     <canvas id="gameCanvas" width="400" height="400"></canvas>
-    
-<script>
-    var canvas, canvasContext;
-    
-    window.onload = function(){
-        canvas = document.getElementById('gameCanvas');
-       canvasContext = canvas.getContext('2d')
-   
-        setInterval(mainloop, 1000/50);
-    }
-    function mainloop(){ // loop runs code 50 times per second
-        colorRect(0,0,canvas.width,canvas.height,'black');   
-        colorRect(playerXpos,playerYpos,playerSize,playerSize,'red');  // player
-    }
-    
-    function colorRect(x,y,w,h,c){
-        canvasContext.fillStyle = c; 
-        canvasContext.fillRect(x,y,w,h)
-        
-    }
-    
-    
-    </script>
 
+    <script>
+        var canvas, canvasContext;
+
+        window.onload = function() {
+            canvas = document.getElementById('gameCanvas');
+            canvasContext = canvas.getContext('2d');
+
+            document.addEventListener('keydown', keyPressed);
+            document.addEventListener('keyup', keyReleased);
+
+
+            setInterval(mainloop, 1000 / 50);
+        }
+        // player variables
+        var playerXpos = 10;
+        var playerYpos = 10;
+        var playerXspeed = 5;
+        var playerYspeed = 5;
+        var playerSize = 20;
+
+        //Enemy variables
+        var EnemyXpos = 10;
+        var EnemyYpos = 10;
+        var EnemyXspeed = 5;
+        var EnemyYspeed = 5;
+        var EnemySize = 20;
+
+
+
+        // key codes
+        const W_KEY = 87;
+        const A_KEY = 65;
+        const S_KEY = 83;
+        const D_KEY = 68;
+        var WKeyPressed = false;
+        var AKeyPressed = false;
+        var SKeyPressed = false;
+        var DKeyPressed = false;
+
+
+
+
+        function mainloop() { // loop runs code 50 times per secound
+            colorRect(0, 0, canvas.width, canvas.height, 'yellow'); //bg
+            colorRect(playerXpos, playerYpos, playerSize, playerSize, 'black')
+            colorRect(EnemyXpos, EnemyYpos, EnemySize, EnemySize, 'green')
+            playermove();
+        }
+
+
+        function keyPressed(evt) {
+            if (evt.keyCode == W_KEY) {
+                WKeyPressed = true;
+            }
+            if (evt.keyCode == A_KEY) {
+                AKeyPressed = true;
+            }
+            if (evt.keyCode == S_KEY) {
+                SKeyPressed = true;
+            }
+            if (evt.keyCode == D_KEY) {
+                DKeyPressed = true;
+            }
+        }
+
+
+        function keyReleased(evt) {
+            if (evt.keyCode == W_KEY) {
+                WKeyPressed = false;
+            }
+            if (evt.keyCode == A_KEY) {
+                AKeyPressed = false;
+            }
+            if (evt.keyCode == S_KEY) {
+                SKeyPressed = false;
+            }
+            if (evt.keyCode == D_KEY) {
+                DKeyPressed = false;
+            }
+        }
+
+
+        //player movement
+        function playermove() {
+            if (DKeyPressed && playerXpos < canvas.width - playerSize) {
+                playerXpos += playerXspeed;
+                if (playerXpos < 0 - playerSize) {
+                    playerXpos = canvas.width - playerSize / 2;
+                }
+            }
+
+            if (AKeyPressed && playerXpos > 0) {
+                playerXpos -= playerXspeed;
+                if (playerXpos < 0 - playerSize) {
+                    playerXpos = canvas.width - playerSize / 2;
+                }
+            }
+            if (WKeyPressed && playerYpos > 0) {
+                playerYpos -= playerYspeed;
+            }
+
+            if (SKeyPressed && playerYpos < canvas.height - playerSize) {
+                playerYpos += playerYspeed;
+            }
+
+        }
+
+
+
+        //func to draw colored rects on canvas
+        function colorRect(x, y, w, h, c) {
+            canvasContext.fillStyle = c;
+            canvasContext.fillRect(x, y, w, h);
+
+
+        }
+
+    </script>
 
 </body>
