@@ -20,6 +20,20 @@
 
             setInterval(mainloop, 1000 / 50);
         }
+    var name = ' ';
+        while (name == ' ' || name == null) {
+            name = prompt('what is your name?', 'player') || ' ';
+             
+        }
+         
+        
+        var difficulty = ' ';
+        while (difficulty != 'easy' && difficulty != 'medium' && difficulty != 'hard') {
+            difficulty = prompt('Hi ' + name + ', What difficulty would you like? (easy, medium or hard)',
+                'easy').toLowerCase()
+        }
+
+
         // player variables
         var playerXpos = 10;
         var playerYpos = 10;
